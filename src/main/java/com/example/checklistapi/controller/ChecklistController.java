@@ -76,7 +76,7 @@ public class ChecklistController {
         }
     }
 
-    // Get checklist item in checklist by checklist id
+    // Get all Checklist Item by checklist id
     @GetMapping("/{checklistId}")
     public ResponseEntity<DataResponse> getAllChecklistItemByChecklistId(@RequestParam("checklistId") Integer checklistId) {
         try {
@@ -85,6 +85,17 @@ public class ChecklistController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // Get checklist item in checklist by checklist id
+    @GetMapping("/{checklistId}/item/{checklistItemId}")
+    public ResponseEntity<DataResponse> getChecklistItemByChecklistId(@RequestParam("checklistId") Integer checklistId, @RequestParam("checklistItemId") Integer checklistItemId) {
+        try {
+            return new ResponseEntity<>(new DataResponse(checklistItemService.findByIdAndChecklistId(checklistId, checklistItemId), ""), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     // Delete item by checklist item id
     @DeleteMapping("/{checklistId}/item/{checklistItemId}")
